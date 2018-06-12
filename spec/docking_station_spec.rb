@@ -1,5 +1,5 @@
 require './lib/docking_station.rb'
 
-describe DockingStation do
-
+RSpec.describe DockingStation do
+  it { respond_to(:release_bike) }
 end
