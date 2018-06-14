@@ -1,6 +1,6 @@
 # Understands docking and releasing bikes
 class DockingStation
-  attr_reader :store, :bikes
+  attr_reader :bikes
 
   def initialize
     @bikes = []
@@ -23,6 +23,6 @@ class DockingStation
   end
 
   def empty?
-    @bikes.length.zero?
+    @bikes.empty?
   end
 end
