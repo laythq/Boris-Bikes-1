@@ -24,8 +24,18 @@ describe DockingStation do
     end
     it 'Returns an error when bikes are full' do
       # But docking_station here
-      20.times { subject.dock(bike) }
+      docking_station.DEFAULT_CAPACITY.times { subject.dock(bike) }
       expect { subject.dock bike }.to raise_error('Bike dock is full!')
+    end
+  end
+
+  describe 'Initialize' do
+    it "Expects an initialize value equal to the default value" do
+      expect(docking_station.DEFAULT_CAPACITY).to eq 20
+    end
+    it 'Expects an initialize value to be set as DEFAULT_CAPACITY' do
+      dock = DockingStation.new(50)
+      expect(dock.DEFAULT_CAPACITY).to eq 50
     end
   end
 end
