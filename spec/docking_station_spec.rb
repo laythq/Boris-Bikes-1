@@ -22,7 +22,6 @@ describe DockingStation do
   describe 'Release Bike' do
     it { is_expected.to respond_to(:release_bike) }
     it { expect(bike.working?).to eq(true) }
-    it { expect(docking_station.release_bike).to eq 'working' }
     it 'Releases a bike' do
       docking_station.dock(bike)
       expect(docking_station.release_bike).to be_an_instance_of(Bike)
