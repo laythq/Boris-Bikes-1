@@ -26,6 +26,10 @@ describe DockingStation do
       docking_station.dock(bike)
       expect(docking_station.release_bike).to be_an_instance_of(Bike)
     end
+    it 'Prevents Docking Station from releasing broken bikes' do
+      docking_station.dock(bike)
+      expect(docking_station.release_bike.condition).to eq 'working'
+    end
     it 'Returns an error when no bikes are available' do
       docking_station.bikes = []
       expect { subject.release_bike }.to raise_error('No bikes available!')
@@ -37,7 +41,7 @@ describe DockingStation do
       it { expect(bike.condition).to eq 'working' }
       it { expect(Bike.new('broken').condition).to eq 'broken' }
       it 'Returns an error if bike is broken' do
-        expect { subject.dock(Bike.new('broken')) }.to raise_error('Bike is broken!')
+        expect(docking_station.dock(Bike.new('broken'))).to eq 'This bike is broken!'
       end
       it 'Returns an error when bikes are full' do
         full_capacity = docking_station.capacity + 1
