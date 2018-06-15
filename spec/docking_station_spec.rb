@@ -19,12 +19,18 @@ describe DockingStation do
     expect(docking_station.bikes).to include bike
   end
 
+  it 'Releases a bike' do
+    docking_station.dock(bike)
+    expect(docking_station.release_bike).to be_an_instance_of(Bike)
+  end
+
   describe 'Release Bike' do
     it { is_expected.to respond_to(:release_bike) }
     it { expect(bike.working?).to eq(true) }
-    it 'Releases a bike' do
+    it 'Removes released bike from Bikes array' do
       docking_station.dock(bike)
-      expect(docking_station.release_bike).to be_an_instance_of(Bike)
+      docking_station.release_bike
+      expect(docking_station.bikes).not_to include bike
     end
     it 'Prevents Docking Station from releasing broken bikes' do
       docking_station.dock(bike)

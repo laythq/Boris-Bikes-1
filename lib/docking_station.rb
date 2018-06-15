@@ -9,13 +9,12 @@ class DockingStation
   def initialize(capacity = DEFAULT_CAPACITY)
     @capacity = capacity
     @bikes = []
-    @active_bikes = []
-    @broken_bikes = []
   end
 
   def release_bike
     raise 'No bikes available!' if empty?
     released_bike = @bikes.find { |bike| bike.condition == 'working' }
+    @bikes = @bikes.reject { |bike| bike == released_bike }
     released_bike
   end
 
