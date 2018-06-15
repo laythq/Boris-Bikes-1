@@ -4,28 +4,25 @@ require_relative './bike.rb'
 class DockingStation
   DEFAULT_CAPACITY = 20
 
-  attr_reader :bikes
-  attr_accessor :capacity
+  attr_accessor :bikes, :capacity
 
   def initialize(capacity = DEFAULT_CAPACITY)
     @capacity = capacity
     @bikes = []
+    @active_bikes = []
+    @broken_bikes = []
   end
 
   def release_bike
     raise 'No bikes available!' if empty?
     released_bike = @bikes.find { |bike| bike.condition == 'working' }
-    released_bike.condition
+    released_bike
   end
 
   def dock(bike)
     raise 'Bike dock is full!' if full?
+    raise 'Bike is broken!' unless bike.working?
     @bikes << bike
-  end
-
-  def return_bike(bike)
-    raise 'Bike is broken!' if bike.!working?
-    dock(bike)
   end
 
   private
