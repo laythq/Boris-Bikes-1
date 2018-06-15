@@ -1,16 +1,28 @@
 # Understands docking and releasing bikes
-class DockingStation
-  attr_reader :bikes
-  attr_accessor :DEFAULT_CAPACITY
+#require './bike.rb'
 
-  def initialize(capacity=20)
-    @DEFAULT_CAPACITY = capacity
+class DockingStation
+  DEFAULT_CAPACITY = 20
+
+  attr_reader :bikes
+  attr_accessor :capacity
+
+  def initialize(capacity = DEFAULT_CAPACITY)
+    @capacity = capacity
     @bikes = []
   end
 
   def release_bike
     raise 'No bikes available!' if empty?
-    @bikes.pop
+    @bikes.each.with_index do |x,y|
+                #print x.to_a[1]
+                if x.include? "working"
+
+                  released_bike = @bikes.delete_at(y)
+                  break
+                end
+              end
+                #return @bikes
   end
 
   def dock(bike)
@@ -18,13 +30,35 @@ class DockingStation
     @bikes << bike
   end
 
+  def return_bike(bike, condition)
+    bike1 = [bike, condition]
+    dock(bike1)
+    bike1
+  end
+
   private
 
   def full?
-    @bikes.length >= @DEFAULT_CAPACITY
+    @bikes.length >= @capacity
   end
 
   def empty?
     @bikes.empty?
   end
 end
+
+#dock = DockingStation.new
+#dock.dock([Bike.new, "quarter broken"])
+#puts dock.bikes.join(" ")
+
+#dock.dock([Bike.new, "half broken"])
+#puts dock.bikes.join(" ")
+
+#dock.dock([Bike.new, "working"])
+#puts dock.bikes.join(" ")
+
+#dock.dock([Bike.new, "broken"])
+#puts dock.bikes.join(" ")
+
+#dock.release_bike
+#puts dock.bikes.join(" ")
